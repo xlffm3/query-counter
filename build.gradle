@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.github.xlffm3'
+group = 'io.github.xlffm3'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -25,7 +25,7 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.github.xlffm3'
+            groupId = 'io.github.xlffm3'
             artifactId = 'query-counter'
             version = "0.0.1-SNAPSHOT"
 
