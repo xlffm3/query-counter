@@ -23,28 +23,26 @@ test {
     useJUnitPlatform()
 }
 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             groupId = 'io.github.xlffm3'
             artifactId = 'query-counter'
-            version = "1.0.0"
+            from components.java
 
-            artifact 'build/libs/query-counter-1.0.0.jar'
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
 
             pom {
                 name = 'query-counter'
@@ -87,9 +85,12 @@ publishing {
     }
 
     signing {
-        def signingKey = System.getenv("signing.keyId")
-        def signingPassword = System.getenv("signing.password")
-        useInMemoryPgpKeys(signingKey, signingPassword)
-        sign publishing.publications.maven
+        sign publishing.publications.mavenJava
+    }
+
+    javadoc {
+        if(JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
     }
 }
