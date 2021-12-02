@@ -3,10 +3,11 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 group = 'io.github.xlffm3'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -22,19 +23,40 @@ test {
     useJUnitPlatform()
 }
 
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'io.github.xlffm3'
             artifactId = 'query-counter'
-            version = "0.0.1-SNAPSHOT"
+            version = "1.0.0"
 
-            artifact 'query-counter-0.0.1-SNAPSHOT.jar'
+            artifact 'build/libs/query-counter-1.0.0.jar'
 
             pom {
                 name = 'query-counter'
                 description = 'A library for counting queries for Spring Data JPA application'
                 url = 'https://github.com/xlffm3/query-counter'
+
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://github.com/JavaUnit/AutoParams/blob/main/LICENSE"
+                    }
+                }
 
                 developers {
                     developer {
@@ -43,18 +65,31 @@ publishing {
                         email = 'xlffm3@gmail.com'
                     }
                 }
+
+                scm {
+                    connection = "https://github.com/xlffm3/query-counter.git"
+                    developerConnection = "https://github.com/xlffm3/query-counter.git"
+                    url = "https://github.com/xlffm3/query-counter"
+                }
             }
         }
     }
 
     repositories {
         maven {
-            name = "MyRepo" //  optional target repository name
-            url = "http://my.org.server/repo/url"
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = 'alice'
-                password = 'my-password'
+                username project.ossrhUsername
+                password project.ossrhPassword
             }
         }
+    }
+
+    signing {
+        def signingKey = System.getenv("signing.keyId")
+        def signingPassword = System.getenv("signing.password")
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.maven
     }
 }
