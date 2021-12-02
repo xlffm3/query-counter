@@ -84,3 +84,7 @@ public class QueryTest {
 ```
 
 The only implementation of QueryCounter interface Query-Counter provides is HibernateQueryCounter yet. HibernateQueryCounter is registered as a Spring Bean.
+
+<br>
+
+---
