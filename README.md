@@ -27,7 +27,7 @@ Query-Counter is a library for counting queries for Spring Data JPA application,
 <dependency>
   <groupId>io.github.xlffm3</groupId>
   <artifactId>query-counter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -36,7 +36,7 @@ Query-Counter is a library for counting queries for Spring Data JPA application,
 > build.gradle
 
 ```groovy
-implementation 'io.github.xlffm3:query-counter:1.0.0'
+implementation 'io.github.xlffm3:query-counter:1.0.1'
 ```
 
 <br>
