@@ -16,9 +16,9 @@ Query-Counter is a library for counting queries for Spring Data JPA application,
 
 <br>
 
-## Install
+## Installation
 
-> You can't download this library from Maven central repository for now. Sorry for the inconvenience. This library is currently located in staging repository on Nexus. There were several issues which I need to go through with to deploy to Nexus via Gradle, and I'm still working on it.
+> Sorry for the inconvenience. There is a dependency issue and I'm currently working on it.
 
 ### Maven
 
@@ -42,7 +42,7 @@ implementation 'io.github.xlffm3:query-counter:1.0.0'
 
 <br>
 
-## Getting Started
+## Features
 
 > application.properties
 
